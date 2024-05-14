@@ -1,31 +1,13 @@
-import androidx.compose.desktop.ui.tooling.preview.Preview
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.window.Window
-import androidx.compose.ui.window.application
 
-@Composable
-@Preview
-fun App() {
-    var text by remember { mutableStateOf("Hello, World!") }
+import dao.GroupDAOH2
+import factory.DataSourceFactory
+import output.Console
 
-    MaterialTheme {
-        Button(onClick = {
-            text = "Hello, Desktop!"
-        }) {
-            Text(text)
-        }
-    }
-}
+fun main() {
+    val dataSource = DataSourceFactory.getDS(DataSourceFactory.DataSourceType.HIKARI)
+    val console = Console()
 
-fun main() = application {
-    Window(onCloseRequest = ::exitApplication) {
-        App()
-    }
+    val grupos = GroupDAOH2(dataSource, console).getAllGroups()
+
+    grupos?.forEach { println(it) }
 }
