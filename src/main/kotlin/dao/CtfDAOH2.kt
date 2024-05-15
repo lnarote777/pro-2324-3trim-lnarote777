@@ -5,7 +5,20 @@ import output.IOutputInfo
 import java.sql.SQLException
 import javax.sql.DataSource
 
+/**
+ * Implementation of [ICtfDAO] for managing CTF (Capture The Flag) entities in an H2 database.
+ *
+ * @property dataSource The [DataSource] for database connections.
+ * @property logger The logger for error logging.
+ */
 class CtfDAOH2(private val dataSource: DataSource, private val console: IOutputInfo): ICtfDAO {
+
+    /**
+     * Inserts a new CTF entity into the database.
+     *
+     * @param ctf The CTF entity to be created.
+     * @return The created CTF entity if successful, null otherwise.
+     */
     override fun createCtf(ctf: CtfEntity): CtfEntity? {
         val sql = "INSERT INTO CTFS (CTFID, GRUPOID, PUNTUACION) VALUES (?, ?, ?)"
 
@@ -30,6 +43,12 @@ class CtfDAOH2(private val dataSource: DataSource, private val console: IOutputI
         }
     }
 
+    /**
+     * Retrieves a CTF entity by its ID from the database.
+     *
+     * @param id The ID of the CTF entity to retrieve.
+     * @return The retrieved CTF entity if found, null otherwise.
+     */
     override fun getCtfById(id: Int): CtfEntity? {
         val sql = "SELECT * FROM CTFS WHERE CTFID = ?"
 
@@ -55,6 +74,12 @@ class CtfDAOH2(private val dataSource: DataSource, private val console: IOutputI
         }
     }
 
+    /**
+     * Updates an existing CTF entity in the database.
+     *
+     * @param ctf The CTF entity to be updated.
+     * @return The updated CTF entity if successful, null otherwise.
+     */
     override fun updateCtf(ctf: CtfEntity): CtfEntity? {
         val sql = "UPDATE CTFS SET GRUPOID = ?, PUNTUACION = ? WHERE CTFID = ?"
 
@@ -80,6 +105,12 @@ class CtfDAOH2(private val dataSource: DataSource, private val console: IOutputI
         }
     }
 
+    /**
+     * Deletes a CTF entity from the database by its ID.
+     *
+     * @param id The ID of the CTF entity to delete.
+     * @throws RuntimeException if the deletion fails.
+     */
     override fun deleteCtf(id: Int): Boolean? {
         val sql = "DELETE FROM CTFS WHERE CTFID = ?"
 
@@ -95,6 +126,12 @@ class CtfDAOH2(private val dataSource: DataSource, private val console: IOutputI
             null
         }
     }
+
+    /**
+     * Retrieves all CTF entities from the database.
+     *
+     * @return A list of all CTF entities if successful, null otherwise.
+     */
 
     override fun getAllCtf(): List<CtfEntity>? {
         val sql = "SELECT * FROM CTFS"

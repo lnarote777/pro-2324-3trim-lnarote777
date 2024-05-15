@@ -39,7 +39,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "pro-2324-3trim-lnarote777"
+            packageName = "un9pe"
             packageVersion = "1.0.0"
         }
     }

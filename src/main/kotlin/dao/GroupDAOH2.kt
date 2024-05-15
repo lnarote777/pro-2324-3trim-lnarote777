@@ -5,7 +5,20 @@ import output.IOutputInfo
 import java.sql.SQLException
 import javax.sql.DataSource
 
+/**
+ * Implementation of [IGroupDAO] for managing group entities in an H2 database.
+ *
+ * @property dataSource The [DataSource] for database connections.
+ * @property console The console output handler.
+ */
 class GroupDAOH2(private val dataSource: DataSource, private val console: IOutputInfo): IGroupDAO {
+
+    /**
+     * Inserts a new group entity into the database.
+     *
+     * @param group The group entity to be created.
+     * @return The created group entity if successful, null otherwise.
+     */
     override fun createGroup(group: GroupEntity): GroupEntity? {
         val sql = "INSERT INTO GRUPOS (GRUPOID, GRUPODESC, MEJORPOSCTFID) VALUES (?, ?, ?)"
 
@@ -30,6 +43,12 @@ class GroupDAOH2(private val dataSource: DataSource, private val console: IOutpu
         }
     }
 
+    /**
+     * Retrieves a group entity by its ID from the database.
+     *
+     * @param id The ID of the group entity to retrieve.
+     * @return The retrieved group entity if found, null otherwise.
+     */
     override fun getGroupById(id: Int): GroupEntity? {
         val sql = "SELECT * FROM GRUPOS WHERE GRUPOID = ?"
 
@@ -55,6 +74,12 @@ class GroupDAOH2(private val dataSource: DataSource, private val console: IOutpu
         }
     }
 
+    /**
+     * Updates an existing group entity in the database.
+     *
+     * @param group The group entity to be updated.
+     * @return The updated group entity if successful, null otherwise.
+     */
     override fun updateGroup(group: GroupEntity): GroupEntity? {
         val sql = "UPDATE GRUPOS SET GRUPODESC = ?, MEJORPOSCTFID = ? WHERE GROUPID = ?"
 
@@ -80,6 +105,12 @@ class GroupDAOH2(private val dataSource: DataSource, private val console: IOutpu
         }
     }
 
+    /**
+     * Deletes a group entity from the database by its ID.
+     *
+     * @param id The ID of the group entity to delete.
+     * @return true if the deletion is successful, false otherwise.
+     */
     override fun deleteGroup(id: Int): Boolean? {
         val sql = "DELETE FROM GRUPOS WHERE GRUPOID = ?"
 
@@ -96,6 +127,11 @@ class GroupDAOH2(private val dataSource: DataSource, private val console: IOutpu
         }
     }
 
+    /**
+     * Retrieves all group entities from the database.
+     *
+     * @return A list of all group entities if successful, null otherwise.
+     */
     override fun getAllGroups(): List<GroupEntity>? {
         val sql = "SELECT * FROM GRUPOS"
         return try {
