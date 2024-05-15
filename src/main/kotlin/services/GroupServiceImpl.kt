@@ -4,8 +4,8 @@ import dao.GroupDAOH2
 import entity.GroupEntity
 
 class GroupServiceImpl(private val groupDAO: GroupDAOH2): IGroupService {
-    override fun createGroup(group: GroupEntity): GroupEntity? {
-        return groupDAO.createGroup(group)
+    override fun createGroup(groupDesc: String): String? {
+        return groupDAO.createGroup(groupDesc)
     }
 
     override fun getGroupById(id: Int): GroupEntity? {

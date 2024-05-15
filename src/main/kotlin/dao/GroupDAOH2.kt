@@ -19,18 +19,16 @@ class GroupDAOH2(private val dataSource: DataSource, private val console: IOutpu
      * @param group The group entity to be created.
      * @return The created group entity if successful, null otherwise.
      */
-    override fun createGroup(group: GroupEntity): GroupEntity? {
-        val sql = "INSERT INTO GRUPOS (GRUPOID, GRUPODESC, MEJORPOSCTFID) VALUES (?, ?, ?)"
+    override fun createGroup(groupDesc: String): String? {
+        val sql = "INSERT INTO GRUPOS (GRUPODESC) VALUES (?)"
 
         return try {
             dataSource.connection.use { conn ->
                 conn.prepareStatement(sql).use { stmt ->
-                    stmt.setInt(1, group.groupId)
-                    stmt.setString(2, group.groupDesc)
-                    stmt.setInt(3, group.bestPosCtfId)
+                    stmt.setString(1, groupDesc)
                     val rs = stmt.executeUpdate()
                     if (rs == 1){
-                        group
+                        groupDesc
                     }else{
                         console.showMessage("Error - Insert query failed! ($rs records inserted)")
                         null
@@ -81,12 +79,11 @@ class GroupDAOH2(private val dataSource: DataSource, private val console: IOutpu
      * @return The updated group entity if successful, null otherwise.
      */
     override fun updateGroup(group: GroupEntity): GroupEntity? {
-        val sql = "UPDATE GRUPOS SET GRUPODESC = ?, MEJORPOSCTFID = ? WHERE GROUPID = ?"
+        val sql = "UPDATE GRUPOS SET MEJORPOSCTFID = ? WHERE GRUPOID = ?"
 
         return try {
             dataSource.connection.use { conn ->
                 conn.prepareStatement(sql).use { stmt ->
-                    stmt.setString(1, group.groupDesc)
                     stmt.setInt(2, group.bestPosCtfId)
                     stmt.setInt(3, group.groupId)
                     val rs = stmt.executeUpdate()
@@ -118,7 +115,13 @@ class GroupDAOH2(private val dataSource: DataSource, private val console: IOutpu
             dataSource.connection.use { conn ->
                 conn.prepareStatement(sql).use { stmt ->
                     stmt.setInt(1, id)
-                    (stmt.executeUpdate() == 1)
+                    val rs = stmt.executeUpdate()
+                    if (rs == 1){
+                        true
+                    }else{
+                        console.showMessage("Error - Update query failed! ($rs records inserted)")
+                        false
+                    }
                 }
             }
         }catch (e: SQLException){
