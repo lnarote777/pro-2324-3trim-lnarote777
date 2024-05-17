@@ -1,9 +1,10 @@
 package services
 
-import dao.GroupDAOH2
+import dao.groups.GroupDAOH2
+import dao.groups.IGroupDAO
 import entity.GroupEntity
 
-class GroupServiceImpl(private val groupDAO: GroupDAOH2): IGroupService {
+class GroupServiceImpl(private val groupDAO: IGroupDAO): IGroupService {
     override fun createGroup(groupDesc: String): String? {
         return groupDAO.createGroup(groupDesc)
     }

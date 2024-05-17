@@ -1,14 +1,15 @@
 package services
 
-import dao.CtfDAOH2
+import dao.ctfs.CtfDAOH2
+import dao.ctfs.ICtfDAO
 import entity.CtfEntity
 
-class CtfServiceImpl(private val ctfDAO: CtfDAOH2): ICtfService {
+class CtfServiceImpl(private val ctfDAO: ICtfDAO): ICtfService {
     override fun createCtf(ctf: CtfEntity): CtfEntity? {
         return ctfDAO.createCtf(ctf)
     }
 
-    override fun getCtfById(id: Int): CtfEntity? {
+    override fun getCtfById(id: Int): List<CtfEntity>? {
         return ctfDAO.getCtfById(id)
     }
 

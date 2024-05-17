@@ -96,6 +96,12 @@ class Utilities(private val console: IOutputInfo) {
     private fun deleteParticipation(args: Array<String>, ctfService: ICtfService){
         try {
             if (args.size == 3){
+                val ctfid = args[1].toIntOrNull()
+                val groupId = args[2].toIntOrNull()
+
+                if (ctfid != null && groupId != null){
+                    TODO()
+                }
 
             }else if(args.size < 3){
                 console.showMessage("***")
@@ -137,6 +143,26 @@ class Utilities(private val console: IOutputInfo) {
 
     private fun showCTF(args: Array<String>, ctfService: ICtfService){
         try {
+            if (args.size == 2){
+                val ctfId = args[1].toIntOrNull()
+
+                if (ctfId != null){
+                    val ctfs = ctfService.getCtfById(ctfId)
+
+                    if (ctfs != null) {
+                        val ctfOrder = ctfs.sortedByDescending { it.punctuation }
+                        ctfOrder.forEach { console.showCtfs(it) }
+                    }else{
+                        console.showMessage("*** Ctf not found. ***")
+                    }
+                }else{
+                    console.showMessage("*** ***")
+                }
+            }else if (args.size < 2){
+                console.showMessage("***")
+            }else{
+                console.showMessage("*** Too many arguments for command ${args[0]}")
+            }
 
         }catch (e: Exception){
             console.showMessage("ERROR - ${e.message}")

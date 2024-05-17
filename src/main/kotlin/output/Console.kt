@@ -1,5 +1,6 @@
 package output
 
+import entity.CtfEntity
 import entity.GroupEntity
 
 class Console: IOutputInfo {
@@ -9,5 +10,9 @@ class Console: IOutputInfo {
 
     override fun showGroups(group: GroupEntity) {
         println(group)
+    }
+
+    override fun showCtfs(ctf: CtfEntity){
+        println(ctf)
     }
 }
