@@ -5,6 +5,7 @@ import factory.DataSourceFactory
 import output.Console
 import services.CtfServiceImpl
 import services.GroupServiceImpl
+import utilities.FileReader
 import utilities.Utilities
 import java.io.File
 
@@ -13,8 +14,8 @@ fun main(args: Array<String>) {
 
     val dataSource = DataSourceFactory.getDS(DataSourceFactory.DataSourceType.HIKARI)
 
-    val fileType = File("config.ini")
-
+    val fileReader = FileReader()
+//    val fileType = fileReader.readFileConfig("config.ini")
 
     val daoGroup = DAOFactory(dataSource, console).getGroupDao(DAOFactory.DaoSourceType.SQL)
     val daoCtf = DAOFactory(dataSource, console).getCtfDao(DAOFactory.DaoSourceType.SQL)
@@ -22,7 +23,7 @@ fun main(args: Array<String>) {
     val groupServiceImpl = GroupServiceImpl(daoGroup)
     val ctfServiceImpl = CtfServiceImpl(daoCtf)
 
-
-    Utilities(console).comprobarArgumentos(args, groupServiceImpl, ctfServiceImpl)
+    val argus = arrayOf("-f", "commands.txt")
+    Utilities(console, groupServiceImpl, ctfServiceImpl, fileReader).comprobarArgumentos(args)
 
 }

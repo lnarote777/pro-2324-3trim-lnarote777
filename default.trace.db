@@ -272,3 +272,134 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/D
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 18 more
+2024-05-19 13:56:41.011101+02:00 database: could not close the database
+org.h2.message.DbException: Memoria Insuficiente - Out of memory. Tamaño: "OutOfMemoryError"
+Out of memory. [90108-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.engine.Database.close(Database.java:1183)
+	at org.h2.engine.Database.onShutdown(Database.java:1159)
+	at org.h2.engine.OnExitDatabaseCloser.onShutdown(OnExitDatabaseCloser.java:85)
+	at org.h2.engine.OnExitDatabaseCloser.run(OnExitDatabaseCloser.java:114)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: Memoria Insuficiente - Out of memory. Tamaño: "OutOfMemoryError"
+Out of memory. [90108-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 5 more
+Caused by: org.h2.message.DbException: OutOfMemoryError
+	at org.h2.message.DbException.<clinit>(DbException.java:64)
+	at org.h2.message.TraceObject.<clinit>(TraceObject.java:108)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at factory.DataSourceFactory.getDS(DataSourceFactory.kt:25)
+	at MainKt.main(Main.kt:15)
+Caused by: java.sql.SQLException: OutOfMemoryError
+	at org.h2.message.DbException.<clinit>(DbException.java:62)
+	... 11 more
+Caused by: java.lang.OutOfMemoryError
+	... 12 more
+2024-05-19 14:00:35.991811+02:00 database: flush
+org.h2.message.DbException: Memoria Insuficiente - Out of memory. Tamaño: {0}
+Out of memory. [90108-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:401)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.FileStore.writeInBackground(FileStore.java:1842)
+	at org.h2.mvstore.FileStore$BackgroundWriterThread.run(FileStore.java:2248)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: Memoria Insuficiente - Out of memory. Tamaño: {0}
+Out of memory. [90108-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 6 more
+Caused by: java.lang.OutOfMemoryError: Java heap space
+	at java.base/java.util.concurrent.ConcurrentHashMap$ValuesView.iterator(ConcurrentHashMap.java:4740)
+	at org.h2.mvstore.MVStore.hasUnsavedChanges(MVStore.java:908)
+	at org.h2.mvstore.MVStore.store(MVStore.java:796)
+	at org.h2.mvstore.MVStore.tryCommit(MVStore.java:744)
+	at org.h2.mvstore.MVStore.tryCommit(MVStore.java:737)
+	at org.h2.mvstore.FileStore.writeInBackground(FileStore.java:1835)
+	... 1 more
+2024-05-19 14:00:35.991811+02:00 database: could not close the database
+org.h2.message.DbException: Memoria Insuficiente - Out of memory. Tamaño: "Memoria Insuficiente - Out of memory. Tamaño: {0}\000aOut of memory. [90108-224]"
+Out of memory. [90108-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.engine.Database.throwLastBackgroundException(Database.java:1817)
+	at org.h2.engine.SessionLocal.close(SessionLocal.java:890)
+	at org.h2.engine.SessionLocal.suspend(SessionLocal.java:877)
+	at org.h2.engine.Database.closeAllSessionsExcept(Database.java:1101)
+	at org.h2.engine.Database.closeImpl(Database.java:1197)
+	at org.h2.engine.Database.close(Database.java:1174)
+	at org.h2.engine.Database.onShutdown(Database.java:1159)
+	at org.h2.engine.OnExitDatabaseCloser.onShutdown(OnExitDatabaseCloser.java:85)
+	at org.h2.engine.OnExitDatabaseCloser.run(OnExitDatabaseCloser.java:114)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: Memoria Insuficiente - Out of memory. Tamaño: "Memoria Insuficiente - Out of memory. Tamaño: {0}\000aOut of memory. [90108-224]"
+Out of memory. [90108-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 10 more
+Caused by: org.h2.message.DbException: Memoria Insuficiente - Out of memory. Tamaño: {0}
+Out of memory. [90108-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:401)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.FileStore.writeInBackground(FileStore.java:1842)
+	at org.h2.mvstore.FileStore$BackgroundWriterThread.run(FileStore.java:2248)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientConnectionException: Memoria Insuficiente - Out of memory. Tamaño: {0}
+Out of memory. [90108-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 6 more
+Caused by: java.lang.OutOfMemoryError: Java heap space
+	at java.base/java.util.concurrent.ConcurrentHashMap$ValuesView.iterator(ConcurrentHashMap.java:4740)
+	at org.h2.mvstore.MVStore.hasUnsavedChanges(MVStore.java:908)
+	at org.h2.mvstore.MVStore.store(MVStore.java:796)
+	at org.h2.mvstore.MVStore.tryCommit(MVStore.java:744)
+	at org.h2.mvstore.MVStore.tryCommit(MVStore.java:737)
+	at org.h2.mvstore.FileStore.writeInBackground(FileStore.java:1835)
+	... 1 more
+2024-05-19 17:19:21.834665+02:00 database: flush
+org.h2.message.DbException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at factory.DataSourceFactory.getDS(DataSourceFactory.kt:25)
+	at MainKt.main(Main.kt:15)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 24 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 18 more

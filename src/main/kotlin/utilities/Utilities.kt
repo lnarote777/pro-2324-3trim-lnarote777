@@ -4,11 +4,12 @@ import entity.CtfEntity
 import output.IOutputInfo
 import services.ICtfService
 import services.IGroupService
+import java.io.File
 
 
-class Utilities(private val console: IOutputInfo) {
+class Utilities(private val console: IOutputInfo, private val groupService: IGroupService, private val ctfService: ICtfService, private val fileReader: FileReader) {
 
-    fun comprobarArgumentos(args: Array<String>, groupService: IGroupService, ctfService: ICtfService, ){
+    fun comprobarArgumentos(args: Array<String>){
         if (args.isEmpty()) {
             console.showMessage("ERROR - No command provided")
             return
@@ -17,27 +18,27 @@ class Utilities(private val console: IOutputInfo) {
         val argumento = args[0]
 
         when (argumento){
-            "-g" -> newGroup(args,groupService)
-            "-p" -> newParticipation(args, ctfService)
-            "-t" -> deleteGroup(args, groupService)
-            "-e" -> deleteParticipation(args, ctfService)
-            "-l" -> showGroups(args, groupService)
-            "-c" -> showCTF(args, ctfService)
-            "-f" -> ficheroComandos(args)
+            "-g" -> newGroup(args)
+            "-p" -> newParticipation(args)
+            "-t" -> deleteGroup(args)
+            "-e" -> deleteParticipation(args)
+            "-l" -> showGroups(args)
+            "-c" -> showCTF(args)
+            "-f" -> commandFile(args)
             "-i" -> showInterface()
             else -> console.showMessage("ERROR - Command $argumento invalid")
         }
 
     }
 
-    private fun newGroup(args: Array<String>, groupService: IGroupService){
+    private fun newGroup(args: Array<String>){
         try {
             if (args.size == 2){
                 val groupDesc = args[1]
                 groupService.createGroup(groupDesc)
 
             }else if(args.size < 2){
-                console.showMessage("***")
+                console.showMessage("*** Missing argument for command ${args[0]} ***")
             }else{
                 console.showMessage("*** Too many arguments for command ${args[0]} ***")
             }
@@ -46,7 +47,7 @@ class Utilities(private val console: IOutputInfo) {
         }
     }
 
-    private fun newParticipation(args: Array<String>, ctfService: ICtfService){
+    private fun newParticipation(args: Array<String>){
         try {
             if(args.size == 4){
                 val ctfId = args[1].toIntOrNull()
@@ -57,12 +58,13 @@ class Utilities(private val console: IOutputInfo) {
 
                     val ctf = CtfEntity(ctfId, groupId, puntuaction)
                     ctfService.createCtf(ctf)
+                    console.showMessage("*** Participation created successfully ***")
                 }else{
-                    console.showMessage("***")
+                    console.showMessage("*** Invalid arguments for command ${args[0]} ***")
                 }
 
             }else if (args.size < 4){
-                console.showMessage("***")
+                console.showMessage("*** Missing arguments for command ${args[0]} ***")
             }else{
                 console.showMessage("*** Too many arguments for command ${args[0]} ***")
             }
@@ -71,20 +73,20 @@ class Utilities(private val console: IOutputInfo) {
         }
     }
 
-    private fun deleteGroup(args: Array<String>, groupService: IGroupService){
+    private fun deleteGroup(args: Array<String>){
         try {
             if (args.size == 2){
                 val groupId = args[1].toIntOrNull()
 
                 if (groupId != null) {
                     groupService.deleteGroup(groupId)
-                    console.showMessage("*** Deleted Successful ***")
+                    console.showMessage("*** Group deleted successfully ***")
                 }else{
-                    console.showMessage("*** Command argument invalid ***")
+                    console.showMessage("*** Invalid group ID for command ${args[0]} ***")
                 }
 
             }else if(args.size < 2){
-                console.showMessage("***")
+                console.showMessage("*** Missing argument for command ${args[0]} ***")
             }else{
                 console.showMessage("*** Too many arguments for command ${args[0]} ***")
             }
@@ -93,7 +95,7 @@ class Utilities(private val console: IOutputInfo) {
         }
     }
 
-    private fun deleteParticipation(args: Array<String>, ctfService: ICtfService){
+    private fun deleteParticipation(args: Array<String>){
         try {
             if (args.size == 3){
                 val ctfid = args[1].toIntOrNull()
@@ -101,10 +103,13 @@ class Utilities(private val console: IOutputInfo) {
 
                 if (ctfid != null && groupId != null){
                     TODO()
+                    console.showMessage("*** Participation deleted successfully ***")
+                } else {
+                    console.showMessage("*** Invalid arguments for command ${args[0]} ***")
                 }
 
             }else if(args.size < 3){
-                console.showMessage("***")
+                console.showMessage("*** Missing argument for command ${args[0]} ***")
             }else{
                 console.showMessage("*** Too many arguments for command ${args[0]} ***")
             }
@@ -113,7 +118,7 @@ class Utilities(private val console: IOutputInfo) {
         }
     }
 
-    private fun showGroups(args: Array<String>, groupService: IGroupService){
+    private fun showGroups(args: Array<String>){
 
         try {
             if(args.size == 2){
@@ -126,6 +131,8 @@ class Utilities(private val console: IOutputInfo) {
                     }else{
                         console.showMessage("*** Group not found. ***")
                     }
+                } else {
+                console.showMessage("*** Invalid group ID ***")
                 }
             }else if (args.size == 1){
                 val groups = groupService.getAllGroups()
@@ -141,7 +148,7 @@ class Utilities(private val console: IOutputInfo) {
 
     }
 
-    private fun showCTF(args: Array<String>, ctfService: ICtfService){
+    private fun showCTF(args: Array<String>){
         try {
             if (args.size == 2){
                 val ctfId = args[1].toIntOrNull()
@@ -153,13 +160,13 @@ class Utilities(private val console: IOutputInfo) {
                         val ctfOrder = ctfs.sortedByDescending { it.punctuation }
                         ctfOrder.forEach { console.showCtfs(it) }
                     }else{
-                        console.showMessage("*** Ctf not found. ***")
+                        console.showMessage("*** CTF not found. ***")
                     }
                 }else{
-                    console.showMessage("*** ***")
+                    console.showMessage("*** Invalid CTF ID ***")
                 }
             }else if (args.size < 2){
-                console.showMessage("***")
+                console.showMessage("*** Missing argument for command ${args[0]} ***")
             }else{
                 console.showMessage("*** Too many arguments for command ${args[0]}")
             }
@@ -169,9 +176,38 @@ class Utilities(private val console: IOutputInfo) {
         }
     }
 
-    private fun ficheroComandos(args: Array<String>){
+    private fun commandFile(args: Array<String>){
         try {
+            if (args.size == 2){
+                val path = args[1]
+                val file = File(path)
 
+                if(file.exists()){
+                    val commands = fileReader.readFileCommand(file)
+                    commands.forEach { pair->
+
+
+
+                        if (pair.first != pair.second){
+                            var argument = pair.second
+
+                            if(pair.second.contentEquals(";")){
+                                argument = pair.second.split(";").joinToString(" ")
+                            }
+
+                            val args = arrayOf(pair.first, argument)
+                            comprobarArgumentos(args)
+                        }
+                    }
+                }else{
+                    console.showMessage("*** The file doesn't exist. ***")
+                }
+
+            }else if(args.size < 2){
+                console.showMessage("*** Missing argument for command ${args[0]} ***")
+            }else{
+                console.showMessage("*** Too many arguments for command ${args[0]} ***")
+            }
         }catch (e: Exception){
             console.showMessage("ERROR - ${e.message}")
         }
@@ -179,6 +215,7 @@ class Utilities(private val console: IOutputInfo) {
 
     private fun showInterface(){
         try {
+            val ui = true
 
         }catch (e: Exception){
             console.showMessage("ERROR - ${e.message}")
