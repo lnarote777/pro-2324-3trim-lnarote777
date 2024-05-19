@@ -24,6 +24,6 @@ fun main(args: Array<String>) {
     val ctfServiceImpl = CtfServiceImpl(daoCtf)
 
     val argus = arrayOf("-f", "commands.txt")
-    Utilities(console, groupServiceImpl, ctfServiceImpl, fileReader).comprobarArgumentos(args)
+    Utilities(console, groupServiceImpl, ctfServiceImpl, fileReader).comprobarArgumentos(argus)
 
 }

@@ -16,8 +16,7 @@
 1
 
 # Elimina participación, podrá tener tantas líneas como quiera.
--e
-1;1
+
 
 # Listado de participaciones, podrá tener tantas líneas como quiera.
 -l

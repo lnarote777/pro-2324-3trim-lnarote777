@@ -36,7 +36,7 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
             if (args.size == 2){
                 val groupDesc = args[1]
                 groupService.createGroup(groupDesc)
-
+                console.showMessage("*** Group created successfully ***")
             }else if(args.size < 2){
                 console.showMessage("*** Missing argument for command ${args[0]} ***")
             }else{
@@ -185,18 +185,21 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                 if(file.exists()){
                     val commands = fileReader.readFileCommand(file)
                     commands.forEach { pair->
-
-
-
                         if (pair.first != pair.second){
-                            var argument = pair.second
+                            val argument = pair.second
 
-                            if(pair.second.contentEquals(";")){
-                                argument = pair.second.split(";").joinToString(" ")
+                            if(argument.contains(";")){
+                                val arguments = pair.second.split(";")
+                                val args = arrayOf(pair.first, arguments[0], arguments[1], arguments[2])
+                                comprobarArgumentos(args)
+                            }else{
+                                val args = arrayOf(pair.first, argument)
+                                comprobarArgumentos(args)
                             }
-
-                            val args = arrayOf(pair.first, argument)
+                        }else if (pair.second == "-l"){
+                            val args = arrayOf(pair.first)
                             comprobarArgumentos(args)
+
                         }
                     }
                 }else{

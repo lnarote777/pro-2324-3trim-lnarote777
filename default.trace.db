@@ -403,3 +403,255 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/D
 	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
 	... 18 more
+2024-05-19 17:44:14.094664+02:00 database: flush
+org.h2.message.DbException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at factory.DataSourceFactory.getDS(DataSourceFactory.kt:25)
+	at MainKt.main(Main.kt:15)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 24 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 18 more
+2024-05-19 17:48:02.919571+02:00 database: wrong user or password; user: "USER"
+org.h2.message.DbException: Nombre de usuario ó password incorrecto
+Wrong user name or password [28000-224]
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.engine.Engine.openSession(Engine.java:154)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.util.JdbcUtils.getConnection(JdbcUtils.java:288)
+	at org.h2.server.web.WebServer.getConnection(WebServer.java:811)
+	at org.h2.server.web.WebApp.login(WebApp.java:1039)
+	at org.h2.server.web.WebApp.process(WebApp.java:227)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:177)
+	at org.h2.server.web.WebThread.process(WebThread.java:154)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Nombre de usuario ó password incorrecto
+Wrong user name or password [28000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:522)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 16 more
+2024-05-19 17:49:31.855485+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "drop table grupos [*]on delete constraint"
+Syntax error in SQL statement "drop table grupos [*]on delete constraint"; SQL statement:
+drop table grupos on delete constraint [42000-224]
+2024-05-19 17:52:25.123273+02:00 database: flush
+org.h2.message.DbException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at factory.DataSourceFactory.getDS(DataSourceFactory.kt:25)
+	at MainKt.main(Main.kt:15)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 24 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 18 more
+2024-05-19 18:00:45.855612+02:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "drop table grupos\000d\000a[*]drop table ctfs"
+Syntax error in SQL statement "drop table grupos\000d\000a[*]drop table ctfs"; SQL statement:
+drop table grupos
+drop table ctfs [42000-224]
+2024-05-19 18:03:53.124905+02:00 database: flush
+org.h2.message.DbException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at factory.DataSourceFactory.getDS(DataSourceFactory.kt:25)
+	at MainKt.main(Main.kt:15)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 24 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 18 more
+2024-05-19 18:08:20.102583+02:00 database: wrong user or password; user: "USER"
+org.h2.message.DbException: Nombre de usuario ó password incorrecto
+Wrong user name or password [28000-224]
+	at org.h2.message.DbException.get(DbException.java:223)
+	at org.h2.message.DbException.get(DbException.java:199)
+	at org.h2.message.DbException.get(DbException.java:188)
+	at org.h2.engine.Engine.openSession(Engine.java:154)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.util.JdbcUtils.getConnection(JdbcUtils.java:288)
+	at org.h2.server.web.WebServer.getConnection(WebServer.java:811)
+	at org.h2.server.web.WebApp.login(WebApp.java:1039)
+	at org.h2.server.web.WebApp.process(WebApp.java:227)
+	at org.h2.server.web.WebApp.processRequest(WebApp.java:177)
+	at org.h2.server.web.WebThread.process(WebThread.java:154)
+	at org.h2.server.web.WebThread.run(WebThread.java:103)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Nombre de usuario ó password incorrecto
+Wrong user name or password [28000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:522)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 16 more
+2024-05-19 18:23:21.741690+02:00 database: flush
+org.h2.message.DbException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at factory.DataSourceFactory.getDS(DataSourceFactory.kt:25)
+	at MainKt.main(Main.kt:15)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 24 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 18 more
+2024-05-19 18:23:35.550913+02:00 database: flush
+org.h2.message.DbException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.message.DbException.convert(DbException.java:407)
+	at org.h2.mvstore.db.Store.lambda$new$0(Store.java:122)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:1546)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:371)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:291)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2035)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:326)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:343)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:125)
+	at org.h2.Driver.connect(Driver.java:59)
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138)
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359)
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201)
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470)
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561)
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100)
+	at com.zaxxer.hikari.HikariDataSource.<init>(HikariDataSource.java:81)
+	at factory.DataSourceFactory.getDS(DataSourceFactory.kt:25)
+	at MainKt.main(Main.kt:15)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: Error General : "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]"
+General error: "org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]" [50000-224]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:566)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	... 24 more
+Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/larad/Documents/1DAM/Programacion/pro-2324-3trim-lnarote777/default.mv.db [2.2.224/7]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.SingleFileStore.lockFileChannel(SingleFileStore.java:143)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:117)
+	at org.h2.mvstore.SingleFileStore.open(SingleFileStore.java:81)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:286)
+	... 18 more
