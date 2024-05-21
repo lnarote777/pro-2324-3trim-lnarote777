@@ -9,10 +9,10 @@ class Console: IOutputInfo {
     }
 
     override fun showGroups(group: GroupEntity) {
-        println(group)
+        showMessage("     ${group.groupId}     |   ${group.groupDesc}   |    ${group.bestPosCtfId}")
     }
 
     override fun showCtfs(ctf: CtfEntity){
-        println(ctf)
+        showMessage("     ${ctf.ctfId}   |     ${ctf.groupId}     |    ${ctf.punctuation}")
     }
 }

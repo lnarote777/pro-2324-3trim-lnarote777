@@ -83,14 +83,14 @@ class CtfDAOH2(private val dataSource: DataSource, private val console: IOutputI
      * @return The updated CTF entity if successful, null otherwise.
      */
     override fun updateCtf(ctf: CtfEntity): CtfEntity? {
-        val sql = "UPDATE CTFS SET GRUPOID = ?, PUNTUACION = ? WHERE CTFID = ?"
+        val sql = "UPDATE CTFS SET PUNTUACION = ? WHERE CTFID = ? AND GRUPOID = ?"
 
         return try {
             dataSource.connection.use { conn ->
                 conn.prepareStatement(sql).use { stmt ->
-                    stmt.setInt(1, ctf.groupId)
-                    stmt.setInt(2, ctf.punctuation)
-                    stmt.setInt(3, ctf.ctfId)
+                    stmt.setInt(1, ctf.punctuation)
+                    stmt.setInt(2, ctf.ctfId)
+                    stmt.setInt(3, ctf.groupId)
                     val rs = stmt.executeUpdate()
 
                     if (rs == 1){
@@ -99,6 +99,28 @@ class CtfDAOH2(private val dataSource: DataSource, private val console: IOutputI
                         console.showMessage("Error - Update query failed! ($rs records inserted)")
                         null
                     }
+                }
+            }
+        }catch (e: SQLException){
+            console.showMessage("Error - Insert query failed! (${e.message})")
+            null
+        }
+    }
+
+    /**
+     * Deletes a CTF entity from the database by its ID.
+     *
+     * @param id The ID of the CTF entity to delete.
+     * @throws RuntimeException if the deletion fails.
+     */
+    override fun deleteCtfByGroupId(id: Int): Boolean? {
+        val sql = "DELETE FROM CTFS WHERE GRUPOID = ?"
+
+        return try{
+            dataSource.connection.use { conn ->
+                conn.prepareStatement(sql).use { stmt ->
+                    stmt.setInt(1, id)
+                    (stmt.executeUpdate() == 1)
                 }
             }
         }catch (e: SQLException){

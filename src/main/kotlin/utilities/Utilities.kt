@@ -1,13 +1,14 @@
 package utilities
 
 import entity.CtfEntity
+//import graphicInterface.GraphicInterface
 import output.IOutputInfo
 import services.ICtfService
 import services.IGroupService
 import java.io.File
 
 
-class Utilities(private val console: IOutputInfo, private val groupService: IGroupService, private val ctfService: ICtfService, private val fileReader: FileReader) {
+class Utilities(private val console: IOutputInfo, private val groupService: IGroupService, private val ctfService: ICtfService, private val fileReader: IFileReader, /*private val ui : GraphicInterface*/) {
 
     fun comprobarArgumentos(args: Array<String>){
         if (args.isEmpty()) {
@@ -55,13 +56,21 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                 val puntuaction = args[3].toIntOrNull()
 
                 if (ctfId != null && groupId != null && puntuaction != null){
-
+                    val ctfs = ctfService.getAllCtf()
+                    val groupExist = ctfs?.find { groupId == it.groupId && ctfId == it.ctfId}
                     val ctf = CtfEntity(ctfId, groupId, puntuaction)
-                    ctfService.createCtf(ctf)
-                    console.showMessage("*** Participation created successfully ***")
+
+                    if (groupExist == ctf){
+                        ctfService.updateCtf(ctf)
+                    }else{
+                        ctfService.createCtf(ctf)
+                        console.showMessage("*** Participation created successfully ***")
+                    }
                 }else{
                     console.showMessage("*** Invalid arguments for command ${args[0]} ***")
                 }
+
+                TODO("Recalcular campo mejorPosCtfId del grupo con el id")
 
             }else if (args.size < 4){
                 console.showMessage("*** Missing arguments for command ${args[0]} ***")
@@ -79,8 +88,11 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                 val groupId = args[1].toIntOrNull()
 
                 if (groupId != null) {
-                    groupService.deleteGroup(groupId)
-                    console.showMessage("*** Group deleted successfully ***")
+                    if (groupService.deleteGroup(groupId) == true && ctfService.deleteCtfByGroupId(groupId) == true){
+                        console.showMessage("*** Group deleted successfully ***")
+                    }else{
+                        console.showMessage("***   ***")
+                    }
                 }else{
                     console.showMessage("*** Invalid group ID for command ${args[0]} ***")
                 }
@@ -102,7 +114,26 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                 val groupId = args[2].toIntOrNull()
 
                 if (ctfid != null && groupId != null){
-                    TODO()
+                    val ctfs = ctfService.getAllCtf()
+
+                    if(ctfs != null){
+                        val ctf = ctfs.find { ctfid == it.ctfId }
+
+                        if (ctf != null) {
+                            ctfService.deleteCtf(ctf.ctfId)
+
+                            val groups = groupService.getAllGroups()
+                            val group = groups?.find { groupId == it.groupId }
+                            if (group != null) {
+                                groupService.updateGroup(group)
+                                TODO("sin terminar")
+                            }
+                        }else{
+                            console.showMessage("*** CtfId not found ***")
+                        }
+
+                    }
+
                     console.showMessage("*** Participation deleted successfully ***")
                 } else {
                     console.showMessage("*** Invalid arguments for command ${args[0]} ***")
@@ -126,7 +157,13 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
 
                 if (id != null){
                     val group = groupService.getGroupById(id)
-                    if (group != null){
+                    val ctfs = ctfService.getAllCtf()
+                    val ctfGroup = ctfs?.find { id == it.groupId }
+                    if (group != null && ctfGroup != null){
+                        console.showMessage("Processed: List of participation of the group '${group.groupDesc}'")
+                        console.showMessage("GROUP: ${group.groupId}   ${group.groupDesc}  MEJORCTF: ${group.bestPosCtfId}, Position: , Score: ${ctfGroup.punctuation}")
+                        console.showMessage("CTF   | Puntuaction | Position")
+                        console.showMessage("------------------------------")
                         console.showGroups(group)
                     }else{
                         console.showMessage("*** Group not found. ***")
@@ -136,6 +173,7 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                 }
             }else if (args.size == 1){
                 val groups = groupService.getAllGroups()
+                console.showMessage("  GROUPID  |  GROUPDESC  |  BESTPOSCETFID")
                 groups?.forEach { console.showGroups(it) }
 
             }else{
@@ -158,6 +196,11 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
 
                     if (ctfs != null) {
                         val ctfOrder = ctfs.sortedByDescending { it.punctuation }
+
+
+                        console.showMessage("Processed: List of participation CTF: '$ctfId'")
+                        console.showMessage("GRUPO GANADOR: $")
+                        console.showMessage("  CTFID  |  GROUPID  |  PUNTUACTION")
                         ctfOrder.forEach { console.showCtfs(it) }
                     }else{
                         console.showMessage("*** CTF not found. ***")
@@ -218,7 +261,7 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
 
     private fun showInterface(){
         try {
-            val ui = true
+
 
         }catch (e: Exception){
             console.showMessage("ERROR - ${e.message}")

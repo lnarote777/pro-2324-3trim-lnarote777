@@ -1,9 +1,11 @@
 package utilities
 
+import factory.DAOFactory
+import factory.DataSourceFactory
 import java.io.File
 
-class FileReader {
-    fun readFileCommand(file: File): MutableList<Pair<String, String>> {
+class FileReader: IFileReader {
+    override fun readFileCommand(file: File): MutableList<Pair<String, String>> {
         val commands = mutableListOf<Pair<String, String>>()
         var command = ""
 
@@ -25,15 +27,21 @@ class FileReader {
         return commands
     }
 
-//    fun readFileConfig(path: String): String {
-//        val file = File(path)
-//        var partes = listOf<String>()
-//
-//        file.forEachLine { line ->
-//            if (line.startsWith("tipo")){
-//                partes = line.split("=")
-//            }
-//        }
-//        return partes[3]
-//    }
+   override fun readFileConfig(path: String): DAOFactory.DaoSourceType? {
+        val file = File(path)
+        var partes = listOf<String>()
+
+        file.forEachLine { line ->
+            if (line.startsWith("tipo")){
+                partes = line.split("=")
+            }
+        }
+        return when (partes[1]){
+            "SQL" -> DAOFactory.DaoSourceType.SQL
+            "JSON" -> DAOFactory.DaoSourceType.JSON
+            "TXT" -> DAOFactory.DaoSourceType.TXT
+            "XML" -> DAOFactory.DaoSourceType.XML
+            else ->  TODO()
+        }
+   }
 }

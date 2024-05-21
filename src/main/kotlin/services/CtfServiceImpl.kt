@@ -17,11 +17,15 @@ class CtfServiceImpl(private val ctfDAO: ICtfDAO): ICtfService {
         return ctfDAO.updateCtf(ctf)
     }
 
-    override fun deleteCtf(id: Int): Boolean? {
-        return ctfDAO.deleteCtf(id)
+    override fun deleteCtfByGroupId(id: Int): Boolean? {
+        return ctfDAO.deleteCtfByGroupId(id)
     }
 
     override fun getAllCtf(): List<CtfEntity>? {
         return ctfDAO.getAllCtf()
+    }
+
+    override fun deleteCtf(id: Int): Boolean? {
+        return ctfDAO.deleteCtf(id)
     }
 }

@@ -24,4 +24,8 @@ class CtfDAOTXT(private val dataSource: DataSource, private val console: IOutput
     override fun getAllCtf(): List<CtfEntity>? {
         TODO("Not yet implemented")
     }
+
+    override fun deleteCtfByGroupId(id: Int): Boolean? {
+        TODO("Not yet implemented")
+    }
 }
