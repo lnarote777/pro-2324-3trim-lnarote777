@@ -151,6 +151,27 @@ class CtfDAOH2(private val dataSource: DataSource, private val console: IOutputI
         }
     }
 
+    override fun getCtfByGroupID(id: Int): CtfEntity? {
+//        val sql = "SELECT * FROM CTFS WHERE GRUPOID = ?"
+//
+//        return try {
+//            dataSource.connection.use { conn ->
+//                conn.prepareStatement(sql).use { stmt ->
+//                    stmt.setInt(1, id)
+//                    val rs = stmt.executeQuery()
+//                    val ctf = CtfEntity(
+//                        ctfId = rs.getInt("CTFID"),
+//                        gro
+//                        )
+//                }
+//            }
+//        }catch (e: SQLException){
+//            console.showMessage("Error - Insert query failed! (${e.message})")
+//            null
+//        }
+        TODO()
+    }
+
     /**
      * Retrieves all CTF entities from the database.
      *

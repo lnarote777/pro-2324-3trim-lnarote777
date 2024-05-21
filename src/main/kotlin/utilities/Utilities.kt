@@ -70,8 +70,6 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                     console.showMessage("*** Invalid arguments for command ${args[0]} ***")
                 }
 
-                TODO("Recalcular campo mejorPosCtfId del grupo con el id")
-
             }else if (args.size < 4){
                 console.showMessage("*** Missing arguments for command ${args[0]} ***")
             }else{
@@ -159,12 +157,13 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                     val group = groupService.getGroupById(id)
                     val ctfs = ctfService.getAllCtf()
                     val ctfGroup = ctfs?.find { id == it.groupId }
+
                     if (group != null && ctfGroup != null){
                         console.showMessage("Processed: List of participation of the group '${group.groupDesc}'")
-                        console.showMessage("GROUP: ${group.groupId}   ${group.groupDesc}  MEJORCTF: ${group.bestPosCtfId}, Position: , Score: ${ctfGroup.punctuation}")
-                        console.showMessage("CTF   | Puntuaction | Position")
-                        console.showMessage("------------------------------")
-                        console.showGroups(group)
+                        console.showMessage("GROUP: ${group.groupId}   ${group.groupDesc}  MEJORCTF: $, Position: , Score: ${ctfGroup.punctuation}")
+                        console.showMessage("CTF   | Score | Position")
+                        console.showMessage("------------------------")
+                        console.showGroup(group, ctfGroup)
                     }else{
                         console.showMessage("*** Group not found. ***")
                     }
@@ -197,11 +196,23 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                     if (ctfs != null) {
                         val ctfOrder = ctfs.sortedByDescending { it.punctuation }
 
+                        val groupId = ctfOrder[0].groupId
+                        val group = groupService.getGroupById(groupId)
 
                         console.showMessage("Processed: List of participation CTF: '$ctfId'")
-                        console.showMessage("GRUPO GANADOR: $")
-                        console.showMessage("  CTFID  |  GROUPID  |  PUNTUACTION")
-                        ctfOrder.forEach { console.showCtfs(it) }
+                        console.showMessage("WINNER: ${group?.groupDesc} Best Score: ${ctfOrder[0].punctuation} Total players: ${ctfs.size}")
+
+                        console.showMessage("GROUP   | Score")
+                        console.showMessage("---------------")
+
+                        ctfOrder.forEach { ctf ->
+                            val groupId = ctf.groupId
+                            val group = groupService.getGroupById(groupId)
+                            if (group != null) {
+                                console.showCtf(ctf, group)
+                            }
+                        }
+
                     }else{
                         console.showMessage("*** CTF not found. ***")
                     }

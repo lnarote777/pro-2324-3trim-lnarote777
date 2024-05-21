@@ -8,11 +8,15 @@ class Console: IOutputInfo {
         if (salto) println(mensaje) else print(mensaje)
     }
 
-    override fun showGroups(group: GroupEntity) {
-        showMessage("     ${group.groupId}     |   ${group.groupDesc}   |    ${group.bestPosCtfId}")
+    override fun showGroup(group: GroupEntity, ctf: CtfEntity) {
+        showMessage("  ${ctf.ctfId}   |   ${ctf.punctuation}  |   ${group.bestPosCtfId}")
     }
 
-    override fun showCtfs(ctf: CtfEntity){
-        showMessage("     ${ctf.ctfId}   |     ${ctf.groupId}     |    ${ctf.punctuation}")
+    override fun showGroups(group: GroupEntity) {
+        showMessage("${group.groupId} | ${group.groupDesc} | ${group.bestPosCtfId}")
+    }
+
+    override fun showCtf(ctf: CtfEntity, group: GroupEntity){
+        showMessage("${group.groupDesc} | ${ctf.punctuation}")
     }
 }

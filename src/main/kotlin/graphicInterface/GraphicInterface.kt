@@ -32,22 +32,14 @@ import androidx.compose.ui.window.singleWindowApplication
     fun Content(){
 
         Surface(
-
+            modifier = Modifier.fillMaxSize(),
             color = Color.LightGray
         ) {
 
             Row (horizontalArrangement = Arrangement.Center){
-                Button(
-                    onClick = { TODO() }
-                ){
-                    Text("Holi")
-                }
-                Button(
-                    onClick = { TODO() }
-                ){
-                    Text("Holi2")
-                }
+                Botones()
             }
+            Spacer(modifier = Modifier.size(10.dp))
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -67,3 +59,16 @@ import androidx.compose.ui.window.singleWindowApplication
         }
     }
 
+@Composable
+fun Botones(){
+    Button(
+        onClick = { TODO() }
+    ){
+        Text("Holi")
+    }
+    Button(
+        onClick = { TODO() }
+    ){
+        Text("Holi2")
+    }
+}

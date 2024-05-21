@@ -22,6 +22,10 @@ class CtfDAOJSON(private val dataSource: DataSource, private val console: IOutpu
         TODO("Not yet implemented")
     }
 
+    override fun getCtfByGroupID(id: Int): CtfEntity? {
+        TODO("Not yet implemented")
+    }
+
     override fun getAllCtf(): List<CtfEntity>? {
         TODO("Not yet implemented")
     }

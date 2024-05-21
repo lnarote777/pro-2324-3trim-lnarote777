@@ -21,6 +21,10 @@ class CtfDAOXML(private val dataSource: DataSource, private val console: IOutput
         TODO("Not yet implemented")
     }
 
+    override fun getCtfByGroupID(id: Int): CtfEntity? {
+        TODO("Not yet implemented")
+    }
+
     override fun getAllCtf(): List<CtfEntity>? {
         TODO("Not yet implemented")
     }
