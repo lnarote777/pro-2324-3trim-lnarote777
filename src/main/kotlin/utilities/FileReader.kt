@@ -4,7 +4,18 @@ import factory.DAOFactory
 import factory.DataSourceFactory
 import java.io.File
 
+/**
+ * An implementation of the IFileReader interface for reading commands and configurations from files.
+ */
 class FileReader: IFileReader {
+
+    /**
+     * Reads commands from the given file and returns a list of command pairs.
+     * Each pair contains a command and its associated line.
+     *
+     * @param file The file to read commands from.
+     * @return A mutable list of pairs where each pair consists of a command and a line.
+     */
     override fun readFileCommand(file: File): MutableList<Pair<String, String>> {
         val commands = mutableListOf<Pair<String, String>>()
         var command = ""
@@ -27,7 +38,13 @@ class FileReader: IFileReader {
         return commands
     }
 
-   override fun readFileConfig(path: String): DAOFactory.DaoSourceType? {
+    /**
+     * Reads a configuration file to determine the type of DAO source.
+     *
+     * @param path The path to the configuration file.
+     * @return The DAO source type as specified in the configuration file.
+     */
+   override fun readFileConfig(path: String): DAOFactory.DaoSourceType {
         val file = File(path)
         var partes = listOf<String>()
 
@@ -41,7 +58,7 @@ class FileReader: IFileReader {
             "JSON" -> DAOFactory.DaoSourceType.JSON
             "TXT" -> DAOFactory.DaoSourceType.TXT
             "XML" -> DAOFactory.DaoSourceType.XML
-            else ->  TODO()
+            else -> TODO()
         }
    }
 }
