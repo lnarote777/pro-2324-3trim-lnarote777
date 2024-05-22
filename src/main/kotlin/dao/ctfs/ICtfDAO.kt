@@ -9,5 +9,4 @@ interface ICtfDAO {
     fun getAllCtf(): List<CtfEntity>?
     fun deleteCtfByGroupId(id: Int): Boolean?
     fun deleteCtf(id: Int): Boolean?
-    fun getCtfByGroupID(id: Int): CtfEntity?
 }

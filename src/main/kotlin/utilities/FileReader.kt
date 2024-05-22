@@ -12,9 +12,6 @@ class FileReader: IFileReader {
     /**
      * Reads commands from the given file and returns a list of command pairs.
      * Each pair contains a command and its associated line.
-     *
-     * @param file The file to read commands from.
-     * @return A mutable list of pairs where each pair consists of a command and a line.
      */
     override fun readFileCommand(file: File): MutableList<Pair<String, String>> {
         val commands = mutableListOf<Pair<String, String>>()
@@ -40,9 +37,6 @@ class FileReader: IFileReader {
 
     /**
      * Reads a configuration file to determine the type of DAO source.
-     *
-     * @param path The path to the configuration file.
-     * @return The DAO source type as specified in the configuration file.
      */
    override fun readFileConfig(path: String): DAOFactory.DaoSourceType {
         val file = File(path)

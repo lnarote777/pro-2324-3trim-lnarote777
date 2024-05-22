@@ -3,6 +3,9 @@ package output
 import entity.CtfEntity
 import entity.GroupEntity
 
+/**
+ * A class that implements [IOutputInfo] to display messages and data to the console.
+ */
 class Console: IOutputInfo {
     override fun showMessage(mensaje: String, salto: Boolean) {
         if (salto) println(mensaje) else print(mensaje)

@@ -5,6 +5,9 @@ import entity.CtfEntity
 import output.IOutputInfo
 import javax.sql.DataSource
 
+/**
+ * Implementation of [ICtfDAO] for managing CTF (Capture The Flag) entities in a JSON-based data source.
+ */
 class CtfDAOJSON(private val dataSource: DataSource, private val console: IOutputInfo): ICtfDAO {
     override fun createCtf(ctf: CtfEntity): CtfEntity? {
         TODO("Not yet implemented")
@@ -19,10 +22,6 @@ class CtfDAOJSON(private val dataSource: DataSource, private val console: IOutpu
     }
 
     override fun deleteCtf(id: Int): Boolean? {
-        TODO("Not yet implemented")
-    }
-
-    override fun getCtfByGroupID(id: Int): CtfEntity? {
         TODO("Not yet implemented")
     }
 

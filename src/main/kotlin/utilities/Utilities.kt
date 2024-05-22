@@ -7,12 +7,17 @@ import services.ICtfService
 import services.IGroupService
 import java.io.File
 
-
+/**
+ * A utility class that provides various commands for managing groups and CTF (Capture The Flag) entities.
+*/
 class Utilities(private val console: IOutputInfo, private val groupService: IGroupService, private val ctfService: ICtfService, private val fileReader: IFileReader, /*private val ui : GraphicInterface*/) {
 
-    fun comprobarArgumentos(args: Array<String>){
+    /**
+     * Processes the command-line arguments and executes the corresponding command.
+     */
+    fun checkCommands(args: Array<String>){
         if (args.isEmpty()) {
-            console.showMessage("ERROR - No command provided")
+            console.showMessage("*** ERROR - No command provided ***")
             return
         }
 
@@ -27,7 +32,7 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
             "-c" -> showCTF(args)
             "-f" -> commandFile(args)
             "-i" -> showInterface()
-            else -> console.showMessage("ERROR - Command $argumento invalid")
+            else -> console.showMessage("*** ERROR - Command $argumento invalid ***")
         }
 
     }
@@ -62,6 +67,7 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
 
                     if (groupExist == ctf){
                         ctfService.updateCtf(ctf)
+                        console.showMessage("***")
                     }else{
                         ctfService.createCtf(ctf)
                         console.showMessage("*** Participation created successfully ***")
@@ -89,7 +95,7 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                     if (groupService.deleteGroup(groupId) == true && ctfService.deleteCtfByGroupId(groupId) == true){
                         console.showMessage("*** Group deleted successfully ***")
                     }else{
-                        console.showMessage("***   ***")
+                        console.showMessage("*** ERROR ***")
                     }
                 }else{
                     console.showMessage("*** Invalid group ID for command ${args[0]} ***")
@@ -124,7 +130,7 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                             val group = groups?.find { groupId == it.groupId }
                             if (group != null) {
                                 groupService.updateGroup(group)
-                                TODO("sin terminar")
+                                TODO("No tiene la mejor posicion")
                             }
                         }else{
                             console.showMessage("*** CtfId not found ***")
@@ -156,14 +162,19 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                 if (id != null){
                     val group = groupService.getGroupById(id)
                     val ctfs = ctfService.getAllCtf()
-                    val ctfGroup = ctfs?.find { id == it.groupId }
+                    val ctfsGroup = ctfs?.filter { id == it.groupId }
 
-                    if (group != null && ctfGroup != null){
+                    if (group != null && ctfsGroup != null){
+                        ctfsGroup.sortedByDescending { it.punctuation }
+
                         console.showMessage("Processed: List of participation of the group '${group.groupDesc}'")
-                        console.showMessage("GROUP: ${group.groupId}   ${group.groupDesc}  MEJORCTF: $, Position: , Score: ${ctfGroup.punctuation}")
+                        console.showMessage("GROUP: ${group.groupId}   ${group.groupDesc}  MEJORCTF: $, Position: , Score: ${ctfsGroup[0].punctuation}")
                         console.showMessage("CTF   | Score | Position")
                         console.showMessage("------------------------")
-                        console.showGroup(group, ctfGroup)
+                        ctfsGroup.forEach { ctf ->
+                            console.showGroup(group, ctf)
+                        }
+
                     }else{
                         console.showMessage("*** Group not found. ***")
                     }
@@ -230,6 +241,9 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
         }
     }
 
+    /*
+    * Checks the given file and checks each argument found in it.
+    */
     private fun commandFile(args: Array<String>){
         try {
             if (args.size == 2){
@@ -245,14 +259,14 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                             if(argument.contains(";")){
                                 val arguments = pair.second.split(";")
                                 val args = arrayOf(pair.first, arguments[0], arguments[1], arguments[2])
-                                comprobarArgumentos(args)
+                                checkCommands(args)
                             }else{
                                 val args = arrayOf(pair.first, argument)
-                                comprobarArgumentos(args)
+                                checkCommands(args)
                             }
                         }else if (pair.second == "-l"){
                             val args = arrayOf(pair.first)
-                            comprobarArgumentos(args)
+                            checkCommands(args)
 
                         }
                     }

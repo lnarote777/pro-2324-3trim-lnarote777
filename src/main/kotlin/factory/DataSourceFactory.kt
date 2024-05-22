@@ -5,6 +5,10 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import javax.sql.DataSource
 
+/**
+ * A factory object to create instances of [DataSource] for different data source types.
+ * The factory supports HikariCP and JDBC data source configurations.
+ */
 object DataSourceFactory {
     enum class DataSourceType {
         HIKARI,

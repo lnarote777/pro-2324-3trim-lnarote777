@@ -1,9 +1,11 @@
 package services
 
-import dao.ctfs.CtfDAOH2
 import dao.ctfs.ICtfDAO
 import entity.CtfEntity
 
+/**
+ * Implementation of [ICtfService] that uses a data access object (DAO) to perform CRUD operations on CTF entities.
+ */
 class CtfServiceImpl(private val ctfDAO: ICtfDAO): ICtfService {
     override fun createCtf(ctf: CtfEntity): CtfEntity? {
         return ctfDAO.createCtf(ctf)

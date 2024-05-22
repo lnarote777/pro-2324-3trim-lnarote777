@@ -1,6 +1,4 @@
 import androidx.compose.ui.window.application
-import dao.ctfs.CtfDAOH2
-import dao.groups.GroupDAOH2
 import factory.DAOFactory
 import factory.DataSourceFactory
 
@@ -9,7 +7,6 @@ import services.CtfServiceImpl
 import services.GroupServiceImpl
 import utilities.FileReader
 import utilities.Utilities
-import java.io.File
 
 fun main(args: Array<String>) = application {
     val console = Console()
@@ -17,17 +14,17 @@ fun main(args: Array<String>) = application {
     val dataSource = DataSourceFactory.getDS(DataSourceFactory.DataSourceType.HIKARI)
 
     val fileReader = FileReader()
-    val fileType = fileReader.readFileConfig("config.ini")
+    val fileType = fileReader.readFileConfig("un9pe.ini")
 
-    val daoGroup = DAOFactory(dataSource, console).getGroupDao(DAOFactory.DaoSourceType.SQL)
-    val daoCtf = DAOFactory(dataSource, console).getCtfDao(DAOFactory.DaoSourceType.SQL)
+    val daoGroup = DAOFactory(dataSource, console).getGroupDao(fileType)
+    val daoCtf = DAOFactory(dataSource, console).getCtfDao(fileType)
 
     val groupServiceImpl = GroupServiceImpl(daoGroup)
     val ctfServiceImpl = CtfServiceImpl(daoCtf)
 
     //val graphicInterface = GraphicInterface()
 
-    val argus = arrayOf("-c", "1")
-    Utilities(console, groupServiceImpl, ctfServiceImpl, fileReader ).comprobarArgumentos(argus)
+    val argus = arrayOf("-l", "2")
+    Utilities(console, groupServiceImpl, ctfServiceImpl, fileReader ).checkCommands(argus)
 
 }

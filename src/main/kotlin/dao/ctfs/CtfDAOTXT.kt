@@ -4,6 +4,9 @@ import entity.CtfEntity
 import output.IOutputInfo
 import javax.sql.DataSource
 
+/**
+ * Implementation of [ICtfDAO] for managing CTF (Capture The Flag) entities in a TXT-based data source.
+ */
 class CtfDAOTXT(private val dataSource: DataSource, private val console: IOutputInfo): ICtfDAO {
     override fun createCtf(ctf: CtfEntity): CtfEntity? {
         TODO("Not yet implemented")
@@ -18,10 +21,6 @@ class CtfDAOTXT(private val dataSource: DataSource, private val console: IOutput
     }
 
     override fun deleteCtf(id: Int): Boolean? {
-        TODO("Not yet implemented")
-    }
-
-    override fun getCtfByGroupID(id: Int): CtfEntity? {
         TODO("Not yet implemented")
     }
 
