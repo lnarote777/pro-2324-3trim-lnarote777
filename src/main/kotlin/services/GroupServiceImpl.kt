@@ -16,8 +16,8 @@ class GroupServiceImpl(private val groupDAO: IGroupDAO): IGroupService {
         return groupDAO.getGroupById(id)
     }
 
-    override fun updateGroup(group: GroupEntity): GroupEntity? {
-        return groupDAO.updateGroup(group)
+    override fun updateGroup(ctfId: Int, group: GroupEntity): GroupEntity? {
+        return groupDAO.updateGroup(ctfId, group)
     }
 
     override fun deleteGroup(id: Int): Boolean? {

@@ -24,7 +24,7 @@ fun main(args: Array<String>) = application {
 
     //val graphicInterface = GraphicInterface()
 
-    val argus = arrayOf("-l", "2")
+    val argus = arrayOf("-e", "2", "4")
     Utilities(console, groupServiceImpl, ctfServiceImpl, fileReader ).checkCommands(argus)
 
 }
