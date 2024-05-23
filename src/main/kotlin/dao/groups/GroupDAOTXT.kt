@@ -25,7 +25,7 @@ class GroupDAOTXT(private val dataSource: DataSource, private val console: IOutp
         TODO("Not yet implemented")
     }
 
-    override fun updateGroup(ctfId: Int, group: GroupEntity): GroupEntity? {
+    override fun updateGroup(ctfId: Int?, group: GroupEntity): GroupEntity? {
         TODO("Not yet implemented")
     }
 }

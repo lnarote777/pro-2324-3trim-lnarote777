@@ -57,14 +57,15 @@ class GroupDAOH2(private val dataSource: DataSource, private val console: IOutpu
         }
     }
 
-    override fun updateGroup(ctfId: Int, group: GroupEntity): GroupEntity? {
+    override fun updateGroup(ctfId: Int?, group: GroupEntity): GroupEntity? {
         val sql = "UPDATE GRUPOS SET MEJORPOSCTFID = ? WHERE GRUPOID = ?"
 
         return try {
             dataSource.connection.use { conn ->
                 conn.prepareStatement(sql).use { stmt ->
-                    stmt.setInt(1, ctfId)
+                    stmt.setObject(1, ctfId)
                     stmt.setInt(2, group.groupId)
+
                     val rs = stmt.executeUpdate()
 
                     if (rs == 1){

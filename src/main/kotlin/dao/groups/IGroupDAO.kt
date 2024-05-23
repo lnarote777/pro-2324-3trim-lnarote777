@@ -7,5 +7,5 @@ interface IGroupDAO {
     fun getGroupById(id: Int): GroupEntity?
     fun deleteGroup(id: Int): Boolean?
     fun getAllGroups(): List<GroupEntity>?
-    fun updateGroup(ctfId: Int, group: GroupEntity): GroupEntity?
+    fun updateGroup(ctfId: Int?, group: GroupEntity): GroupEntity?
 }

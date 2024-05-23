@@ -121,7 +121,6 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
     }
 
     private fun deleteParticipation(args: Array<String>){
-        TODO("No borra la participación, error de foreing Key -- Se arregla con una transacción")
         try {
             if (args.size == 3){
                 val ctfid = args[1].toIntOrNull()
@@ -134,11 +133,16 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                         val ctf = ctfs.find { ctfid == it.ctfId }
 
                         if (ctf != null) {
-                            ctfService.deleteCtfByGroupId(groupId)
 
                             val groups = groupService.getAllGroups()
                             val group = groups?.find { groupId == it.groupId }
                             if (group != null) {
+                                val ctfIdnull = null
+                                groupService.updateGroup(ctfIdnull, group)
+                                ctfService.deleteCtfByGroupId(groupId)
+
+
+
 
                                 val (position, ctfId) = getBestPosition(groupId)
 

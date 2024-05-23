@@ -57,6 +57,7 @@ class GraphicInterface {
                     onClick1 = {
                         if (text == "Filter"){
                             groupList = filtrar(groups, groupDesc)
+                            groupDesc = ""
                             text = "Show All"
                         } else {
                             groupList = groups
@@ -67,9 +68,6 @@ class GraphicInterface {
                 )
 
                 Spacer(modifier = Modifier.size(20.dp))
-                if (groupDesc == ""){
-                    groupList = groups
-                }
 
                 Listado(groupList)
 

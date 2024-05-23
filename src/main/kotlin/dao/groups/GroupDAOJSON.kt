@@ -25,7 +25,7 @@ class GroupDAOJSON(private val dataSource: DataSource, private val console: IOut
         TODO("Not yet implemented")
     }
 
-    override fun updateGroup(ctfId: Int, group: GroupEntity): GroupEntity? {
+    override fun updateGroup(ctfId: Int?, group: GroupEntity): GroupEntity? {
         TODO("Not yet implemented")
     }
 }
