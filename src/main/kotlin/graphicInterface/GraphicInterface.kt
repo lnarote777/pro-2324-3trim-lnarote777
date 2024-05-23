@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import entity.CtfEntity
 import entity.GroupEntity
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import java.io.File
 
 class GraphicInterface {
@@ -35,8 +37,7 @@ class GraphicInterface {
     @Composable
     fun Content(groups: List<GroupEntity>, ctfs: List<CtfEntity>){
         var groupDesc by remember { mutableStateOf("") }
-        var filteredGroup  = groups
-        var groupList by remember { mutableStateOf(filteredGroup) }
+        var groupList by remember { mutableStateOf(groups) }
         var text by remember { mutableStateOf("Filter") }
 
 
@@ -49,9 +50,26 @@ class GraphicInterface {
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Botones(text , groupDesc, {groupDesc = it}, { groupList = filtrar(groups, groupDesc); groupDesc = "" ; text = "Mostrar Todo"}, { exportar(File("ctfsgroups.txt"), groups, ctfs) })
+                Botones(
+                    text = text ,
+                    groupDesc = groupDesc,
+                    onvalueChange = {groupDesc = it},
+                    onClick1 = {
+                        if (text == "Filter"){
+                            groupList = filtrar(groups, groupDesc)
+                            text = "Show All"
+                        } else {
+                            groupList = groups
+                            text = "Filter"
+                        }
+                    },
+                    onClick2 = { exportar(File("ctfsgroups.txt"), groups, ctfs) }
+                )
 
                 Spacer(modifier = Modifier.size(20.dp))
+                if (groupDesc == ""){
+                    groupList = groups
+                }
 
                 Listado(groupList)
 
@@ -76,7 +94,8 @@ class GraphicInterface {
 
             OutlinedTextField(
                 value = groupDesc,
-                onValueChange = onvalueChange
+                onValueChange = onvalueChange,
+                label = { Text("Group Description") }
             )
 
             Spacer(modifier = Modifier.size(60.dp))
@@ -97,8 +116,8 @@ class GraphicInterface {
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .border(2.dp, Color.Black)
-                .width(500.dp)
-                .height(300.dp)
+                .width(300.dp)
+                .height(200.dp)
 
         ) {
             items(groups) { group ->
@@ -108,20 +127,14 @@ class GraphicInterface {
     }
 
     private fun exportar(file: File, groups: List<GroupEntity>, ctfs: List<CtfEntity>){
-        if (file.exists()){
-            ctfs.forEach { ctf ->
-                file.appendText("CTF -> ${ctf.ctfId}\n")
-                groups.forEach { group ->
-                    if (ctf.groupId == group.groupId) file.appendText("${group.groupDesc} (${ctf.punctuation})\n")
-                }
-            }
-        }else{
+        if (!file.exists()){
             file.createNewFile()
-            ctfs.forEach { ctf ->
-                file.appendText("CTF -> ${ctf.ctfId}\n")
-                groups.forEach { group ->
-                    if (ctf.groupId == group.groupId) file.appendText("${group.groupDesc} (${ctf.punctuation})\n")
-                }
+        }
+
+        ctfs.forEach { ctf ->
+            file.appendText("CTF -> ${ctf.ctfId}\n")
+            groups.forEach { group ->
+                if (ctf.groupId == group.groupId) file.appendText("${group.groupDesc} (${ctf.punctuation})\n")
             }
         }
     }
