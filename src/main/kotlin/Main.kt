@@ -1,6 +1,7 @@
 import androidx.compose.ui.window.application
 import factory.DAOFactory
 import factory.DataSourceFactory
+import graphicInterface.GraphicInterface
 
 import output.Console
 import services.CtfServiceImpl
@@ -10,6 +11,8 @@ import utilities.Utilities
 
 fun main(args: Array<String>) = application {
     val console = Console()
+
+    val argus = arrayOf("-i")
 
     val dataSource = DataSourceFactory.getDS(DataSourceFactory.DataSourceType.HIKARI)
 
@@ -22,9 +25,16 @@ fun main(args: Array<String>) = application {
     val groupServiceImpl = GroupServiceImpl(daoGroup)
     val ctfServiceImpl = CtfServiceImpl(daoCtf)
 
-    //val graphicInterface = GraphicInterface()
+    val graphicInterface = GraphicInterface()
 
-    val argus = arrayOf("-e", "2", "4")
-    Utilities(console, groupServiceImpl, ctfServiceImpl, fileReader ).checkCommands(argus)
+    if (argus[0] == "-i"){
+        val groups = groupServiceImpl.getAllGroups()
+        val ctfs = ctfServiceImpl.getAllCtf()
+        if (groups != null && ctfs != null)
+        graphicInterface.Window({ exitApplication() }, groups, ctfs)
+    }else{
+        Utilities(console, groupServiceImpl, ctfServiceImpl, fileReader) .checkCommands(argus)
+    }
+
 
 }

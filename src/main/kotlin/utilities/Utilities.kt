@@ -1,7 +1,6 @@
 package utilities
 
 import entity.CtfEntity
-//import graphicInterface.GraphicInterface
 import output.IOutputInfo
 import services.ICtfService
 import services.IGroupService
@@ -10,7 +9,7 @@ import java.io.File
 /**
  * A utility class that provides various commands for managing groups and CTF (Capture The Flag) entities.
 */
-class Utilities(private val console: IOutputInfo, private val groupService: IGroupService, private val ctfService: ICtfService, private val fileReader: IFileReader, /*private val ui : GraphicInterface*/) {
+class Utilities(private val console: IOutputInfo, private val groupService: IGroupService, private val ctfService: ICtfService, private val fileReader: IFileReader) {
 
     /**
      * Processes the command-line arguments and executes the corresponding command.
@@ -31,7 +30,6 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
             "-l" -> showGroups(args)
             "-c" -> showCTF(args)
             "-f" -> commandFile(args)
-            "-i" -> showInterface()
             else -> console.showMessage("*** ERROR - Command $argumento invalid ***")
         }
 
@@ -123,7 +121,7 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
     }
 
     private fun deleteParticipation(args: Array<String>){
-        TODO("No hace borra la participación, error de foreing Key -- Se arregla con una transacción")
+        TODO("No borra la participación, error de foreing Key -- Se arregla con una transacción")
         try {
             if (args.size == 3){
                 val ctfid = args[1].toIntOrNull()
@@ -298,15 +296,6 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
             }else{
                 console.showMessage("*** Too many arguments for command ${args[0]} ***")
             }
-        }catch (e: Exception){
-            console.showMessage("ERROR - ${e.message}")
-        }
-    }
-
-    private fun showInterface(){
-        try {
-
-
         }catch (e: Exception){
             console.showMessage("ERROR - ${e.message}")
         }
