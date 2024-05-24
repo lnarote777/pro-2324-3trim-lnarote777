@@ -1,18 +1,15 @@
 # Comentario de la línea. Las opciones son: -g, -p, -t, -e, -l, -c, y pueden o no estar en fichero.
 # Crea grupos, podrá tener tantas líneas como quiera
+-g
+JUANITOS
+LUCIAS
 
 # Añade/Actualiza participaciones, podrá tener tantas líneas como quiera
 -p
 1;1;100
 1;2;90
 1;3;80
-
-# Elimina el grupo y sus participaciones, podrá tener tantas líneas como quiera.
-
-
-# Elimina participación, podrá tener tantas líneas como quiera.
-
-
-# Listado de participaciones, podrá tener tantas líneas como quiera.
-
-# Listado de grupos y puntuaciones, podrá tener tantas líneas como quiera.
+1;7;30
+2;1;20
+2;3;40
+3;3;40

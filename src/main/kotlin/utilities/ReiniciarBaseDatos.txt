@@ -1,0 +1,11 @@
+DELETE FROM CTFS;
+
+TRUNCATE TABLE GRUPOS;
+ALTER TABLE GRUPOS ALTER COLUMN grupoid RESTART WITH 1;
+
+insert into grupos(grupodesc) values('1DAM-G1');
+insert into grupos(grupodesc) values('1DAM-G2');
+insert into grupos(grupodesc) values('1DAM-G3');
+insert into grupos(grupodesc) values('1DAW-G1');
+insert into grupos(grupodesc) values('1DAW-G2');
+insert into grupos(grupodesc) values('1DAW-G3');

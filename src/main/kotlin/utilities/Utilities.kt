@@ -66,7 +66,7 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
 
                     if (groupExist == ctf){
                         ctfService.updateCtf(ctf)
-                        console.showMessage("***")
+                        console.showMessage("*** Score Updated ***")
                         if (group != null) {
                             val (position, ctfId) = getBestPosition(groupId)
                             groupService.updateGroup(ctfId, group)
@@ -75,7 +75,11 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                         ctfService.createCtf(ctf)
                         if (group != null) {
                             val (position, ctfId) = getBestPosition(groupId)
-                            groupService.updateGroup(ctfId, group)
+                            if (ctfId == 0){
+                                groupService.updateGroup(null, group)
+                            }else{
+                                groupService.updateGroup(ctfId, group)
+                            }
                         }
                         console.showMessage("*** Participation created successfully ***")
                     }
@@ -101,11 +105,9 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                 val groupId = args[1].toIntOrNull()
 
                 if (groupId != null) {
-                    if (groupService.deleteGroup(groupId) == true && ctfService.deleteCtfByGroupId(groupId) == true){
-                        console.showMessage("*** Group deleted successfully ***")
-                    }else{
-                        console.showMessage("*** ERROR ***")
-                    }
+                    groupService.deleteGroup(groupId)
+                    ctfService.deleteCtfByGroupId(groupId)
+                    console.showMessage("*** Group deleted successfully ***")
                 }else{
                     console.showMessage("*** Invalid group ID for command ${args[0]} ***")
                 }
@@ -133,29 +135,29 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
                         val ctf = ctfs.find { ctfid == it.ctfId }
 
                         if (ctf != null) {
-
                             val groups = groupService.getAllGroups()
                             val group = groups?.find { groupId == it.groupId }
+
                             if (group != null) {
-                                val ctfIdnull = null
-                                groupService.updateGroup(ctfIdnull, group)
+                                groupService.updateGroup(null, group)
                                 ctfService.deleteCtfByGroupId(groupId)
 
-
-
-
                                 val (position, ctfId) = getBestPosition(groupId)
-
-                                groupService.updateGroup(ctfId, group)
-
+                                if (ctfId == 0){
+                                    groupService.updateGroup(null, group)
+                                }else{
+                                    if(ctfs.find { ctfId == it.ctfId && groupId == it.groupId } == null){
+                                        groupService.updateGroup(null, group)
+                                    }else{
+                                        groupService.updateGroup(ctfId, group)
+                                    }
+                                }
+                                console.showMessage("*** Participation deleted successfully ***")
                             }
                         }else{
                             console.showMessage("*** CtfId not found ***")
                         }
-
                     }
-
-                    console.showMessage("*** Participation deleted successfully ***")
                 } else {
                     console.showMessage("*** Invalid arguments for command ${args[0]} ***")
                 }
@@ -312,7 +314,7 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
         val ctfsIds = mutableListOf<Int>()
 
         allCtfs?.forEach { ctf ->
-            if (ctf.groupId !in ctfsIds) ctfsIds.add(ctf.ctfId)
+            if (ctf.ctfId !in ctfsIds) ctfsIds.add(ctf.ctfId)
         }
 
         for (ctfId in ctfsIds){
@@ -320,17 +322,21 @@ class Utilities(private val console: IOutputInfo, private val groupService: IGro
             var count = 0
 
             if (ctfs != null){
-                while (ctfs[count].groupId != groupId){
+                while (count < ctfs.size && ctfs[count].groupId != groupId) {
                     count++
                 }
 
-                if (best2 > count) best2 = count ; best = Pair((count + 1), ctfId)
+                val ctf = ctfService.getCtfById(ctfId)?.find { groupId == it.groupId }
+                if (best2 > count || ctf != null) {
+                    best2 = count
+                    best = Pair((count + 1), ctfId)
+                }
             }else{
                 console.showMessage("")
             }
 
         }
-        return best?: Pair(-1, -1)
+        return best?: Pair(0, 0)
     }
 
     private fun getPosition(groupId: Int, ctfId: Int): Int{
