@@ -24,7 +24,6 @@ class GraphicInterface {
 
     @Composable
     fun Window(onclose: () -> Unit, groups: List<GroupEntity>, ctfs: List<CtfEntity>) {
-        val file = File("ctfsgroups.txt")
         Window(
             onCloseRequest = onclose,
             title = "CTFs - IES Rafael Alberti"
@@ -39,7 +38,7 @@ class GraphicInterface {
         var groupDesc by remember { mutableStateOf("") }
         var groupList by remember { mutableStateOf(groups) }
         var text by remember { mutableStateOf("Filter") }
-
+        var newFile by remember { mutableStateOf("") } //fichero predeterminado
 
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -51,9 +50,10 @@ class GraphicInterface {
                 verticalArrangement = Arrangement.Center
             ) {
                 Botones(
+                    newFile = newFile,
                     text = text ,
                     groupDesc = groupDesc,
-                    onvalueChange = {groupDesc = it},
+                    onvalueChange1 = {groupDesc = it},
                     onClick1 = {
                         if (text == "Filter"){
                             groupList = filtrar(groups, groupDesc)
@@ -64,7 +64,8 @@ class GraphicInterface {
                             text = "Filter"
                         }
                     },
-                    onClick2 = { exportar(File("ctfsgroups.txt"), groups, ctfs) }
+                    onClick2 = { exportar(newFile, groups, ctfs); },
+                    onvalueChange2 = {newFile = it}
                 )
 
                 Spacer(modifier = Modifier.size(20.dp))
@@ -78,7 +79,7 @@ class GraphicInterface {
     }
 
     @Composable
-    fun Botones(text: String, groupDesc: String, onvalueChange: (String) -> Unit, onClick1: () -> Unit, onClick2: () -> Unit){
+    fun Botones(newFile: String, text: String, groupDesc: String, onvalueChange1: (String) -> Unit, onClick1: () -> Unit, onClick2: () -> Unit, onvalueChange2: (String) -> Unit){
 
         Row (
             horizontalArrangement = Arrangement.Center,
@@ -92,7 +93,7 @@ class GraphicInterface {
 
             OutlinedTextField(
                 value = groupDesc,
-                onValueChange = onvalueChange,
+                onValueChange = onvalueChange1,
                 label = { Text("Group Description") }
             )
 
@@ -103,6 +104,12 @@ class GraphicInterface {
             ){
                 Text("Exportar")
             }
+            OutlinedTextField(
+                value = newFile,
+                onValueChange = onvalueChange2,
+                label = { Text("New file") }
+            )
+
         }
 
     }
@@ -124,11 +131,12 @@ class GraphicInterface {
         }
     }
 
-    private fun exportar(file: File, groups: List<GroupEntity>, ctfs: List<CtfEntity>){
+    private fun exportar(path: String, groups: List<GroupEntity>, ctfs: List<CtfEntity>){
+        val file = File(path)
+
         if (!file.exists()){
             file.createNewFile()
         }
-
         ctfs.forEach { ctf ->
             file.appendText("CTF -> ${ctf.ctfId}\n")
             groups.forEach { group ->

@@ -12,6 +12,8 @@ import utilities.Utilities
 fun main(args: Array<String>) = application {
     val console = Console()
 
+    val argus = arrayOf("-i")
+
     val dataSource = DataSourceFactory.getDS(DataSourceFactory.DataSourceType.HIKARI)
 
     val fileReader = FileReader()
@@ -25,13 +27,13 @@ fun main(args: Array<String>) = application {
 
     val graphicInterface = GraphicInterface()
 
-    if (args[0] == "-i"){
+    if (argus[0] == "-i"){
         val groups = groupServiceImpl.getAllGroups()
         val ctfs = ctfServiceImpl.getAllCtf()
         if (groups != null && ctfs != null)
         graphicInterface.Window({ exitApplication() }, groups, ctfs)
     }else{
-        Utilities(console, groupServiceImpl, ctfServiceImpl, fileReader) .checkCommands(args)
+        Utilities(console, groupServiceImpl, ctfServiceImpl, fileReader) .checkCommands(argus)
     }
 
 }
