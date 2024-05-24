@@ -17,7 +17,7 @@ class Console: IOutputInfo {
     }
 
     override fun showGroups(group: GroupEntity) {
-        showMessage("${group.groupId} | ${group.groupDesc} | ${group.bestPosCtfId}")
+        showMessage("     ${group.groupId}     |   ${group.groupDesc}   |        ${group.bestPosCtfId}")
     }
 
     override fun showCtf(ctf: CtfEntity, group: GroupEntity){
